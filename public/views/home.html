@@ -1,0 +1,70 @@
+<div class="body">
+    <div class="body-container">
+        <div class="cover-container cover-home pt-5">
+            <div class="container py-5">
+              <form class="form-floating search_form" id="searchForm"  ng-submit="search()">
+                <input type="text" class="form-control" id="floatingInputSearch" placeholder="Tìm kiếm" ng-model="key">
+                  <label for="floatingInputSearch">Tìm kiếm</label>
+              </form>
+    
+              <h2 class="text-white mt-5">{{title}}</h2>
+    
+              <div class="row mt-1 mb-4">
+                <div class="col">
+                  <ul class="list-group list-group-flush song_list">
+                    <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 == 0" href="/bai-hat/{{item.song_url}}">
+                      <img src="{{item.img_url}}" alt="{{item.song}}" class="song_img img-thumbnail p-0">
+                      <div class="song_des ms-3">
+                        <p class="song_tt text-dark">{{item.song}}</p>
+                        <p class="song_sg text-secondary text-small">{{item.singer}}</p>
+                      </div>
+                    </a>
+                  </ul>
+                </div>
+                <div class="col">
+                  <ul class="list-group list-group-flush song_list">
+                    <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 != 0" href="/bai-hat/{{item.song_url}}">
+                      <img src="{{item.img_url}}" alt="{{item.song}}" class="song_img img-thumbnail p-0">
+                      <div class="song_des ms-3">
+                        <p class="song_tt text-dark">{{item.song}}</p>
+                        <p class="song_sg text-secondary text-small">{{item.singer}}</p>
+                      </div>
+                    </a>
+                  </ul>
+                </div>
+              </div>
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center" ng-if="pages > 0">
+                  <!-- Fist item -->
+                  <li class="page-item disabled" ng-if="current == 1">
+                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true"><</a>
+                  </li>
+                  <li class="page-item" ng-if="current > 1">
+                    <a class="page-link" href="/{{lo}}/{{current-1}}"" tabindex="-1"><</a>
+                  </li>
+    
+                  <!-- ITEMS -->
+    
+                  <li class="page-item disabled" ng-if="current > 3">
+                    <a class="page-link" href="#">...</a>
+                  </li>
+                  <li class="page-item" ng-repeat="item in pageList | limitTo: 3 track by $index">
+                    <a class="page-link" ng-href="/{{lo}}/{{$index+1}}">{{$index+1}}</a>
+                  </li>
+                  <li class="page-item disabled" ng-if="pages > 3">
+                    <a class="page-link" href="#">...</a>
+                  </li>
+    
+                  <!-- Last item -->
+                  <li class="page-item" ng-if="current < pages">
+                    <a class="page-link" href="/{{lo}}/{{current+1}}">></a>
+                  </li>
+                  <li class="page-item disabled" ng-if="current == pages">
+                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true">></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+        </div>
+      </div>
+</div>

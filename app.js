@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express")
 const app = express();
 let port = 7000;
 
@@ -11,12 +11,13 @@ app.use("/assets", express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+
 app.get('/', (req, res) => { res.render("index")})
 // app.get('/news', (req, res) => { res.render("news")})
 // app.get('/vip', (req, res) => { res.render("vip")})
 app.get('/danh-sach-bai-hat/:p', (req, res) => { res.render("index")})
 app.get('/tim-kiem/:k/:p', (req, res) => {res.render("index")})
-app.get('/bai-hat/:n', (req, res) => {res.render("song")})
+app.get('/bai-hat/:n', (req, res) => {res.render("index")})
 
 let apiSongs = require("./api/songs");
 apiSongs(app);

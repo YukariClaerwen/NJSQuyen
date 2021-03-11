@@ -1,5 +1,25 @@
-let app = angular.module("app.music", []);
+let app = angular.module("app.music", ["ngRoute"]);
 
+app.config(['$routeProvider','$locationProvider', ($routeProvider, $locationProvider) => {
+    $routeProvider
+    .when("/",{
+        templateUrl: "/assets/views/home.html",
+        controller: 'songCtrl',
+        activetab: 'home'
+    })
+    .when('/bai-hat/:n', {
+        templateUrl: "/assets/views/play.html",
+        controller: 'playCtrl'
+    })
+    // .otherwise({
+    //     redirectTo: "/"
+    // });
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}])
 
 removeVietnameseTones = (str) => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 

@@ -1,6 +1,6 @@
 app.controller("songCtrl", 
     ['$scope', 'svSongs', '$location', 
-    ($scope, svSongs, $location) => {
+    function($scope, svSongs, $location) {
 
         $scope.title = "Bài hát mới";
         $scope.songList = [];
