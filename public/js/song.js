@@ -6,7 +6,7 @@ app.controller("songCtrl",
         $scope.songList = [];
         $scope.pages = 0;
         $scope.current = 1;
-        $scope.lo = "bai-hat"
+        $scope.lo = "danh-sach-bai-hat"
         $scope.pageList = [];
 
 
@@ -24,7 +24,7 @@ app.controller("songCtrl",
         } else {
             let paths = $scope.path.split("/");
             let list = paths[1];
-            if(list == 'bai-hat') {
+            if(list == 'danh-sach-bai-hat') {
                 let page = paths[paths.length - 1];
                 svSongs.getSongs(page).then((response) => {
                     $scope.songList = response.data.items;

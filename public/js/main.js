@@ -7,6 +7,11 @@ app.config(['$routeProvider','$locationProvider', ($routeProvider, $locationProv
         controller: 'songCtrl',
         activetab: 'home'
     })
+    .when("/danh-sach-bai-hat/:p", {
+        templateUrl: "/assets/views/home.html",
+        controller: 'songCtrl',
+        activetab: 'home'
+    })
     .when('/bai-hat/:n', {
         templateUrl: "/assets/views/play.html",
         controller: 'playCtrl'
