@@ -1,8 +1,5 @@
+let app = angular.module("app.music", []);
 
-search = (form) => {
-    let key = document.getElementById("floatingInputSearch").value;
-    form.action = `/timkiem/${removeVietnameseTones(key)}`;
-  }
 
 removeVietnameseTones = (str) => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
@@ -32,3 +29,4 @@ removeVietnameseTones = (str) => {
     str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
     return str;
 }
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Music Player</title>
+
+    <link rel="stylesheet" href="/assets/css/song.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body ng-app="app.music">
+
+    <div class="player" ng-controller="playCtrl">
+        <div class="cover">
+            <img src="{{des.thumb}}" alt="">
+        </div>
+        <div class="info">
+            <div class="title">{{des.title}}</div>
+            <div class="singer">{{des.singerTitle}}</div>
+        </div>
+        <div class="volume-box">
+            <span class="volume-down"><i class="material-icons">remove</i></span>
+            <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
+                oninput="music.volume = this.value/100">
+            <span class="volume-up"><i class="material-icons">add</i></span>
+        </div>
+        <div class="btn-box">
+            <i class="material-icons repeat" ng-click="handleRepeat()">repeat</i>
+            <i class="material-icons favorite active" ng-click="handleFavorite()">favorite</i>
+            <i class="material-icons volume" ng-click="handleVolume()">volume_up</i>
+        </div>
+        <div class="music-box">
+            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" oninput="handleSeekBar()">
+
+            <audio class="music-element">
+                <!-- <source src="http://vtf9.nixcdn.com/a19fb4dd33bd73b7cfcf96d546a57a56/60494428/NhacCuaTui1011/EmMuonMacAoVayCuMacAnh-Deus-6940382.mp3" type="audio/mp3"> -->
+                <source src="{{des.location}}" type="audio/mp3">
+            </audio>
+            <span class="current-time">0:0</span><span class="duration">0:0</span>
+            <span class="play" ng-click="playAudio()">
+                <i class="material-icons">play_arrow</i>
+            </span>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/play.js"></script>
+    <script src="/assets/js/services/svSongs.js"></script>
+</body>
+</html>
