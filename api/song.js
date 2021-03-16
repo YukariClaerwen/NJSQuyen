@@ -81,10 +81,11 @@ module.exports = (app) => {
         let name = await req.params.n || 1; 
         
         request(`http://m.nhaccuatui.com/bai-hat/${name}`, async (error, response, body) => {
-            const $ = await cheerio.load(body);
+            let b = await body;
+            let $ = cheerio.load(b);
             let data = {};
             if(!error && response.statusCode == 200) {
-                let key = await $('#icon-play').attr('keyencrypt');
+                let key = $('#icon-play').attr('keyencrypt');
                 console.log($('#icon-play'))
 
                 request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
