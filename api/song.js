@@ -77,18 +77,18 @@ module.exports = (app) => {
         })
     });
 
-    app.get("/song/:n", (req, res) => {
-        let name = req.params.n || 1; 
+    app.get("/song/:n", async (req, res) => {
+        let name = await req.params.n || 1; 
         
-        request(`http://m.nhaccuatui.com/bai-hat/${name}`, (error, response, body) => {
-            const $ = cheerio.load(body);
+        request(`http://m.nhaccuatui.com/bai-hat/${name}`, async (error, response, body) => {
+            const $ = await cheerio.load(body);
             let data = {};
             if(!error && response.statusCode == 200) {
-                let key = $('#icon-play').attr('keyencrypt');
+                let key = await $('#icon-play').attr('keyencrypt');
 
-                request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, (error, response, body) =>{
+                request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
                     if(!error && response.statusCode == 200) {
-                        data = JSON.parse(body);
+                        data = await JSON.parse(body);
                         res.json(data);
                     }
                     else {

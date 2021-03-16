@@ -99,6 +99,7 @@ app.controller("playCtrl",
 
         svSongs.getSong(name).then((response) => {
             $scope.des = response.data.data;
+            console.log($scope.des)
             $scope.music = new Audio($scope.des.location);
             $scope.playAudio();
             playmusic($scope.music,$scope.seekbar,$scope.duration);

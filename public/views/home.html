@@ -37,17 +37,17 @@
               <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center" ng-if="pages > 0">
                   <!-- First item -->
-                  <li class="page-item disabled" ng-if="current == 1">
+                  <!-- <li class="page-item disabled" ng-if="current == 1">
                     <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&laquo;</a>
-                  </li>
-                  <li class="page-item" ng-if="current > 1">
+                  </li> -->
+                  <li class="page-item" ng-if="current > 2">
                     <a class="page-link" href="/{{lo}}/1" tabindex="-1">&laquo;</a>
                   </li>
 
                   <!-- Prev item -->
-                  <li class="page-item disabled" ng-if="current == 1">
+                  <!-- <li class="page-item disabled" ng-if="current == 1">
                     <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&lt;</a>
-                  </li>
+                  </li> -->
                   <li class="page-item" ng-if="current > 1">
                     <a class="page-link" href="/{{lo}}/{{current-1}}" tabindex="-1">&lt;</a>
                   </li>
@@ -79,17 +79,17 @@
                   <li class="page-item" ng-if="current < pages">
                     <a class="page-link" href="/{{lo}}/{{current+1}}">&gt;</a>
                   </li>
-                  <li class="page-item disabled" ng-if="current == pages">
+                  <!-- <li class="page-item disabled" ng-if="current == pages">
                     <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&gt;</a>
-                  </li>
+                  </li> -->
 
                   <!-- Last item -->
-                  <li class="page-item" ng-if="current < pages">
+                  <li class="page-item" ng-if="current < pages-1">
                     <a class="page-link" href="/{{lo}}/{{pages}}">&raquo;</a>
                   </li>
-                  <li class="page-item disabled" ng-if="current == pages">
+                  <!-- <li class="page-item disabled" ng-if="current == pages">
                     <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&raquo;</a>
-                  </li>
+                  </li> -->
                 </ul>
               </nav>
             </div>
