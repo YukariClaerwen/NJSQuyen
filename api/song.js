@@ -83,6 +83,7 @@ module.exports = (app) => {
         request(`http://m.nhaccuatui.com/bai-hat/${name}`, async (error, response, body) => {
             const $ = await cheerio.load(body);
             let data = {};
+            console.log(body)
             if(!error && response.statusCode == 200) {
                 let key = await $('#icon-play').attr('keyencrypt');
                 console.log(key)
