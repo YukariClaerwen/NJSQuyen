@@ -84,13 +84,13 @@
 // }
 
 app.controller("playCtrl", 
-    ['$scope', 'svSongs', '$location', 
-    function($scope, svSongs, $location) {
+    ['$scope', 'svSongs', '$location', '$rootScope', 
+    function($scope, svSongs, $location, $rootScope) {
         $scope.des = [];
         let path = window.location.pathname;
         let paths = path.split("/");
         let name = paths[paths.length - 1];
-        let params = $location.search();
+        $scope.params = $location.search();
 
         $scope.playBtn = document.querySelector('.play')
         $scope.seekbar = document.querySelector('.seekbar')
@@ -98,16 +98,29 @@ app.controller("playCtrl",
         $scope.duration = document.querySelector('.duration')
         $scope.seek = 0;
 
-        console.log(name, params.key);
-        svSongs.getSong(name,params.key).then((response) => {
-            $scope.des = response.data.data;
-            console.log(response)
-            $scope.music = new Audio($scope.des.location);
-            $scope.playAudio();
-            playmusic($scope.music,$scope.seekbar,$scope.duration);
-            onupdate($scope.music, $scope.seekbar);
-            timeupdate($scope.music,$scope.currentTime);
-        })
+        if($scope.params.key != '') {
+            svSongs.getSong(name,$scope.params.key).then((response) => {
+                $scope.des = response.data.data;
+                $scope.music = new Audio($scope.des.location);
+                $scope.playAudio();
+                playmusic($scope.music,$scope.seekbar,$scope.duration);
+                onupdate($scope.music, $scope.seekbar);
+                timeupdate($scope.music,$scope.currentTime);
+            })
+        } else if($scope.params.yb != '') {
+            $scope.link = "https://www.youtube.com/embed/" + $scope.params.yb;
+            var html = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/"+ $scope.params.yb + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+            let el = document.getElementById("videoframe")
+            // angular.element(el)
+            angular.element(el).append(html);
+            // setTimeout(function(){
+            //     document.getElementById("videoframe").appendChild(html)
+            //     // $("#videoframe").append(html);
+            // }, 500);
+            // $('html, body').css({
+            //     overflow: 'hidden'
+            // });
+        }
 
         $scope.autoplay = () => {
             // $scope.music = new Audio($scope.des.location);
@@ -143,8 +156,18 @@ app.controller("playCtrl",
         
 
         $scope.download = () => {
-            saveAs($scope.des.location,$scope.des.title);
+            if($rootScope.isLoggedIn) {
+                let link = document.createElement("a");
+                link.download = $scope.des.title;
+                link.href = `${$scope.des.location}&download=true`;
+                link.click();
+            } else {
+                alert("vui lòng đăng nhập để tải bài hát")
+            }
         }
+        $rootScope.$on("$routeChangeStart", () => {
+            $scope.music.pause();
+        })
     }])
 
     let playmusic = (music,seekbar,duration) => {
