@@ -90,6 +90,7 @@ app.controller("playCtrl",
         let path = window.location.pathname;
         let paths = path.split("/");
         let name = paths[paths.length - 1];
+        let params = $location.search();
 
         $scope.playBtn = document.querySelector('.play')
         $scope.seekbar = document.querySelector('.seekbar')
@@ -97,9 +98,10 @@ app.controller("playCtrl",
         $scope.duration = document.querySelector('.duration')
         $scope.seek = 0;
 
-        svSongs.getSong(name).then((response) => {
+        console.log(name, params.key);
+        svSongs.getSong(name,params.key).then((response) => {
             $scope.des = response.data.data;
-            console.log($scope.des)
+            console.log(response)
             $scope.music = new Audio($scope.des.location);
             $scope.playAudio();
             playmusic($scope.music,$scope.seekbar,$scope.duration);

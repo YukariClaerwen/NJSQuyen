@@ -6,8 +6,8 @@ app.factory("svSongs", ["$http", ($http) => {
         search: (key, page) => {
             return $http.get(`/search/${key}/${page}`);
         },
-        getSong: (name) => {
-            return $http.get(`/song/${name}`);
+        getSong: (name,key) => {
+            return $http.get(`/song/${name}/${key}`);
         },
         login: (data) => {
             return $http.post(`/login`, data);

@@ -14,20 +14,20 @@ module.exports = (app) => {
             };
             if(!error && response.statusCode == 200) {
                 $('.song_item_single').each((index, el) => {
-                    const url = $(el).find('.title_song > a').attr("href"); // link to file you want to download
-                    const path = 'public/files' // where to save a file
                     const song = $(el).find('.title_song > a').text();
                     // const song_url = ;
                     let paths = $(el).find('.title_song > a').attr("href").split("/");
+                    const refkeyyoutube = $(el).find('.title_song > a').attr("refkeyyoutube");
+                    const keyencrypt = $(el).find('span.ic_play_circle').attr('keyencrypt');
                     const song_url = paths[paths.length - 1];
                     paths = song_url.split(".");
                     const singer = $(el).find('.singer_song > a').text();
                     const singer_url = $(el).find('.singer_song > a').attr("href");
-                    const img_url = $(el).find ('.item_thumb img').attr('data-src');
-                    const img_default = $(el).find ('.item_thumb img').attr('src');
+                    const img_url = $(el).find('.item_thumb img').attr('data-src');
+                    const img_default = $(el).find('.item_thumb img').attr('src');
                     if(song != ""){
                         data.items.push({
-                            song, song_url, singer, singer_url, img_url, img_default
+                            song, refkeyyoutube, keyencrypt, song_url, singer, singer_url, img_url, img_default
                         });
                     }
                 });
@@ -55,6 +55,8 @@ module.exports = (app) => {
                 }
                 $('.song_item_single').each((index, el) => {
                     const song = $(el).find('.title_song > a').text();
+                    const refkeyyoutube = $(el).find('.title_song > a').attr("refkeyyoutube");
+                    const keyencrypt = $(el).find('span.ic_play_circle').attr('keyencrypt');
                     let paths = $(el).find('.title_song > a').attr("href").split("/");
                     const song_url = paths[paths.length - 1];
                     paths = song_url.split(".");
@@ -64,7 +66,7 @@ module.exports = (app) => {
                     const img_default = $(el).find ('.item_thumb img').attr('src');
                     if(song != ""){
                         data.items.push({
-                            song, song_url, singer, singer_url, img_url, img_default
+                            song, refkeyyoutube, keyencrypt, song_url, singer, singer_url, img_url, img_default
                         })
                     }
                 });
@@ -77,30 +79,32 @@ module.exports = (app) => {
         })
     });
 
-    app.get("/song/:n", async (req, res) => {
-        let name = await req.params.n || 1; 
-        
-        request(`http://m.nhaccuatui.com/bai-hat/${name}`, async (error, response, body) => {
-            let b = await body;
-            let $ = cheerio.load(b);
-            let data = {};
-            if(!error && response.statusCode == 200) {
-                let key = $('#icon-play').attr('keyencrypt');
-                console.log(body)
+    app.get("/song/:n/:k", async (req, res) => {
+        let key = await req.params.k; 
 
-                request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
-                    if(!error && response.statusCode == 200) {
-                        data = await JSON.parse(body);
-                        res.json(data);
-                    }
-                    else {
-                        console.log(error,2);
-                    }
-                })
+        request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
+            if(!error && response.statusCode == 200) {
+                data = await JSON.parse(body);
+                res.json(data);
             }
             else {
-                console.log(error,1);
+                console.log(error,2);
             }
         })
+        
+        // request(`http://m.nhaccuatui.com/bai-hat/${name}`, async (error, response, body) => {
+        //     let b = await body;
+        //     let $ = cheerio.load(b);
+        //     let data = {};
+        //     if(!error && response.statusCode == 200) {
+        //         let key = $('#icon-play').attr('keyencrypt');
+        //         console.log(body)
+
+                
+        //     }
+        //     else {
+        //         console.log(error,1);
+        //     }
+        // })
     })
 }

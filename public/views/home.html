@@ -12,7 +12,7 @@
               <div class="row mt-1 mb-4">
                 <div class="col">
                   <ul class="list-group list-group-flush song_list">
-                    <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 == 0" href="/bai-hat/{{item.song_url}}">
+                    <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 == 0" href="/bai-hat/{{item.song_url}}?key={{item.keyencrypt}}">
                       <img ng-src="{{item.img_url}}" alt="{{item.song}}" class="song_img img-thumbnail p-0">
                       <!-- <img ng-if="item.img_url != true" ng-src="{{item.img_default}}" alt="{{item.song}}" class="song_img img-thumbnail p-0"> -->
                       <div class="song_des ms-3">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col">
                   <ul class="list-group list-group-flush song_list">
-                    <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 != 0" href="/bai-hat/{{item.song_url}}">
+                    <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 != 0" href="/bai-hat/{{item.song_url}}?key={{item.keyencrypt}}">
                       <img src="{{item.img_url}}" alt="{{item.song}}" class="song_img img-thumbnail p-0">
                       <div class="song_des ms-3">
                         <p class="song_tt text-dark">{{item.song}}</p>
