@@ -86,7 +86,7 @@ module.exports = (app) => {
             let data = {};
             if(!error && response.statusCode == 200) {
                 let key = $('#icon-play').attr('keyencrypt');
-                console.log($('.cover').html())
+                console.log(body)
 
                 request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
                     if(!error && response.statusCode == 200) {
@@ -94,12 +94,12 @@ module.exports = (app) => {
                         res.json(data);
                     }
                     else {
-                        console.log(error);
+                        console.log(error,2);
                     }
                 })
             }
             else {
-                console.log(error);
+                console.log(error,1);
             }
         })
     })
