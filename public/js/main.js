@@ -16,6 +16,10 @@ app.config(['$routeProvider','$locationProvider', ($routeProvider, $locationProv
         templateUrl: "/assets/views/play.html",
         controller: 'playCtrl'
     })
+    .when('/tim-kiem/:key/:page', {
+        templateUrl: "/assets/views/home.html",
+        controller: 'songCtrl'
+    })
     // .otherwise({
     //     redirectTo: "/"
     // });
@@ -26,7 +30,30 @@ app.config(['$routeProvider','$locationProvider', ($routeProvider, $locationProv
     });
 }])
 
-removeVietnameseTones = (str) => {
+
+
+let checklogin = ($q, $location,$rootScope,$route) => {
+    let deferred = $q.defer();
+    // $rootScope.isLoggedIn = false;
+    if($rootScope.isLoggedIn){
+        deferred.resolve();
+        // var route = $route.current.params.user;
+        // if(route === $rootScope.userName){           
+        //     deferred.resolve();
+        // }
+        // else{
+        //     deferred.reject();
+        //     $location.url("/"+$rootScope.userName);
+        // }
+    }
+    else {
+        deferred.reject();
+        // $location.url("/login");
+    }
+    return deferred.promise;
+}
+
+let removeVietnameseTones = (str) => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
     str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 

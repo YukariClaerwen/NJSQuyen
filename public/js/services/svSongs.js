@@ -1,15 +1,16 @@
-// let app = angular.module("app.music");
-
 app.factory("svSongs", ["$http", ($http) => {
     return {
         getSongs: (page) => {
-            return $http.get(`/baihat/${page}`);
+            return $http.get(`/songlist/${page}`);
         },
         search: (key, page) => {
-            return $http.get(`/timkiem/${key}/${page}`);
+            return $http.get(`/search/${key}/${page}`);
         },
         getSong: (name) => {
-            return $http.get(`/nhac/${name}`);
+            return $http.get(`/song/${name}`);
+        },
+        login: (data) => {
+            return $http.post(`/login`, data);
         }
     }
 }])

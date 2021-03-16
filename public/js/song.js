@@ -8,50 +8,42 @@ app.controller("songCtrl",
         $scope.current = 1;
         $scope.lo = "danh-sach-bai-hat"
         $scope.pageList = [];
+        $scope.page = 1;
 
+        $scope.path = $location.path();
+        $scope.paths = $scope.path.split("/");
+        $scope.list = $scope.paths[1];
+        
+        if($scope.path == "/") {
+            $scope.page = 1;
+        } else {
+            $scope.page = parseInt($scope.paths[$scope.paths.length - 1]);
+        }
 
-        $scope.path = window.location.pathname;
-        // let res = $scope.path.split("/");
-        // console.log(res[res.length - 1])
-        if($scope.path == "/"){
-            svSongs.getSongs(1).then((response) => {
+        if($scope.list != 'tim-kiem') {
+            svSongs.getSongs($scope.page).then((response) => {
                 $scope.songList = response.data.items;
                 $scope.pages = response.data.pages;
-                $scope.pageList = $scope.getNumber(response.data.pages);
+                $scope.pageList = $scope.getNumber($scope.pages);
                 $scope.current = response.data.current;
-                console.log($scope.songList)
             })
         } else {
-            let paths = $scope.path.split("/");
-            let list = paths[1];
-            if(list == 'danh-sach-bai-hat') {
-                let page = paths[paths.length - 1];
-                svSongs.getSongs(page).then((response) => {
-                    $scope.songList = response.data.items;
-                    $scope.pages = response.data.pages;
-                    $scope.current = response.data.current;
-                    console.log($scope.pages)
-                })
-            }
-            else {let paths = $scope.path.split("/");
-                let key = paths[2];
-                let page = paths[paths.length - 1];
-                $scope.lo = `tim-kiem/${key}`
-                search(svSongs,key, page, $scope)
-            }
+            let key = $scope.paths[2];
+            $scope.lo = `tim-kiem/${key}`
+            svSongs.search(key,$scope.page).then((response) => {
+                $scope.songList = response.data.items;
+                $scope.found = response.data.found;
+                $scope.title = `Có ${$scope.found} kết quả`;
+                $scope.current = response.data.current;
+                $scope.pages = Math.round($scope.found/10);
+                $scope.pageList = $scope.getNumber($scope.pages);
+            })
         }
 
         $scope.search = () => {
             let key = removeVietnameseTones($scope.key);
-            $scope.lo = `tim-kiem/${key}`
-            if($scope.path == "/"){
-                search(svSongs,key, 1, $scope)
-            } else {
-                let paths = $scope.path.split("/");
-                let page = paths[paths.length - 1];
-                search(svSongs,key, page, $scope)
-            }
-            
+            $scope.lo = `tim-kiem/${key}/1`
+            $location.path($scope.lo);
         }
 
         
@@ -61,18 +53,65 @@ app.controller("songCtrl",
         }
     }])
 
-let search = (sv, key, page, sc) => {
-    sv.search(key,page).then((response) => {
-        sc.found = response.data.found;
-        sc.songList = response.data.res;
-        sc.title = `Có ${sc.found} kết quả`;
+app.controller("mainCtrl", ['$scope', 'svSongs', '$rootScope', '$location',
+    function($scope, svSongs, $rootScope, $location){
+        $scope.loading = false;
+        if (localStorage.getItem("dssn") !== null) {
+            $rootScope.demoSS = JSON.parse(window.localStorage.getItem("dssn"))[0];
         
-        sc.pages = []
-        for(let i = 0; i <= sc.found/10; i++) {
-            sc.pages.push(i+1);
-            console.log(sc.pages)
+            $rootScope.session = $scope.demoSS.role;
+            $rootScope.isLoggedIn = $scope.demoSS.isLoggedIn;
+        } else {
+            $rootScope.isLoggedIn = false;
         }
-    })
+        
+        $scope.logout = function () {
+            var alert = confirm("Bạn muốn đăng xuất?")
+            if(alert){
+                logout($rootScope, $location);
+            }
+        };
+        $scope.login = () => {
+            $scope.loading = true;
+            if ($scope.loginform.$valid) {
+                let data = JSON.stringify({
+                    "email": $scope.email, 
+                    "pass": $scope.pass
+                });
+
+                svSongs.login(data).then((response) => {
+                    $scope.result = response.data;
+                    $scope.loading = false;
+                    if($scope.result == 1) {
+                        alert("Đăng nhập thành công");
+                        $rootScope.isLoggedIn = true;
+                        $rootScope.session = "admin";
+                        let demoSS = [{
+                            role : $rootScope.session,
+                            isLoggedIn : $rootScope.isLoggedIn
+                        }];
+                        let setjson = JSON.stringify(demoSS);
+                        window.localStorage.setItem("dssn", setjson);
+
+                        // $location.path("/");
+                        // console.log($rootScope.isLoggedIn);
+                    } else {
+                        $rootScope.isLoggedIn = false;
+                        alert("Sai email hoặc mật khẩu, bạn không thể đăng nhập");
+                    }
+                })
+            }
+                
+        } 
+
+
+    }])
+
+let logout = (rootScope, location) => {
+    window.localStorage.removeItem("dssn");
+    rootScope.isLoggedIn = false;
+    rootScope.session = null;
+    // location.path("/login");
 }
 
 

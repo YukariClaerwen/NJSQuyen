@@ -22,15 +22,20 @@
             <i class="material-icons volume" ng-click="handleVolume()">volume_up</i>
         </div>
         <div class="music-box">
-            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" oninput="handleSeekBar()">
+            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" ng-change="handleSeekBar()" ng-model="seek">
 
-            <audio class="music-element">
-                <!-- <source src="http://vtf9.nixcdn.com/a19fb4dd33bd73b7cfcf96d546a57a56/60494428/NhacCuaTui1011/EmMuonMacAoVayCuMacAnh-Deus-6940382.mp3" type="audio/mp3"> -->
+            <audio class="music-element" audio-events>
                 <source src="{{des.location}}" type="audio/mp3">
             </audio>
             <span class="current-time">0:0</span><span class="duration">0:0</span>
             <span class="play" ng-click="playAudio()">
                 <i class="material-icons">play_arrow</i>
             </span>
+        </div>
+        <div>
+            <a href="#" download ng-click="download()">download</a>
+            <!-- <form method="get" action="{{des.location}}">
+                <button type="submit">Download!</button>
+             </form> -->
         </div>
     </div>

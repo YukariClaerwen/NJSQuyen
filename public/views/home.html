@@ -13,7 +13,8 @@
                 <div class="col">
                   <ul class="list-group list-group-flush song_list">
                     <a class="list-group-item d-flex justify-content-start" ng-repeat="item in songList" ng-if="$index % 2 == 0" href="/bai-hat/{{item.song_url}}">
-                      <img src="{{item.img_url}}" alt="{{item.song}}" class="song_img img-thumbnail p-0">
+                      <img ng-src="{{item.img_url}}" alt="{{item.song}}" class="song_img img-thumbnail p-0">
+                      <!-- <img ng-if="item.img_url != true" ng-src="{{item.img_default}}" alt="{{item.song}}" class="song_img img-thumbnail p-0"> -->
                       <div class="song_des ms-3">
                         <p class="song_tt text-dark">{{item.song}}</p>
                         <p class="song_sg text-secondary text-small">{{item.singer}}</p>
@@ -35,32 +36,59 @@
               </div>
               <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center" ng-if="pages > 0">
-                  <!-- Fist item -->
+                  <!-- First item -->
                   <li class="page-item disabled" ng-if="current == 1">
-                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true"><</a>
+                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&laquo;</a>
                   </li>
                   <li class="page-item" ng-if="current > 1">
-                    <a class="page-link" href="/{{lo}}/{{current-1}}"" tabindex="-1"><</a>
+                    <a class="page-link" href="/{{lo}}/1" tabindex="-1">&laquo;</a>
                   </li>
-    
-                  <!-- ITEMS -->
-    
-                  <li class="page-item disabled" ng-if="current > 3">
+
+                  <!-- Prev item -->
+                  <li class="page-item disabled" ng-if="current == 1">
+                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&lt;</a>
+                  </li>
+                  <li class="page-item" ng-if="current > 1">
+                    <a class="page-link" href="/{{lo}}/{{current-1}}" tabindex="-1">&lt;</a>
+                  </li>
+
+                  <!-- Items -->
+                  <li class="page-item disabled" ng-if="current >= 3">
                     <a class="page-link" href="#">...</a>
                   </li>
-                  <li class="page-item" ng-repeat="item in pageList | limitTo: 3 track by $index">
-                    <a class="page-link" ng-href="/{{lo}}/{{$index+1}}">{{$index+1}}</a>
+                  <li class="page-item" ng-if="current == pages && pages > 1">
+                    <a ng-href="/{{lo}}/{{current - 2}}" class="page-link">{{current - 2}}</a>
                   </li>
-                  <li class="page-item disabled" ng-if="pages > 3">
-                    <a class="page-link" href="#">...</a>
+                  <li class="page-item" ng-if="current > 1">
+                    <a ng-href="/{{lo}}/{{current - 1}}" class="page-link">{{current - 1}}</a>
                   </li>
-    
-                  <!-- Last item -->
+                  <li class="page-item active" ng-if="current">
+                    <a ng-href="/{{lo}}/{{current}}" class="page-link">{{current}}</a>
+                  </li>
                   <li class="page-item" ng-if="current < pages">
-                    <a class="page-link" href="/{{lo}}/{{current+1}}">></a>
+                    <a ng-href="/{{lo}}/{{current + 1}}" class="page-link">{{current + 1}}</a>
+                  </li>
+                  <li class="page-item" ng-if="current == 1 && current < pages">
+                    <a ng-href="/{{lo}}/{{current + 2}}" class="page-link">{{current + 2}}</a>
+                  </li>
+                  <li class="page-item disabled" ng-if="pages > 3 && current <= (pages - 2)">
+                    <a class="page-link" href="#">...</a>
+                  </li>
+    
+                  <!-- Next item -->
+                  <li class="page-item" ng-if="current < pages">
+                    <a class="page-link" href="/{{lo}}/{{current+1}}">&gt;</a>
                   </li>
                   <li class="page-item disabled" ng-if="current == pages">
-                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true">></a>
+                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&gt;</a>
+                  </li>
+
+                  <!-- Last item -->
+                  <li class="page-item" ng-if="current < pages">
+                    <a class="page-link" href="/{{lo}}/{{pages}}">&raquo;</a>
+                  </li>
+                  <li class="page-item disabled" ng-if="current == pages">
+                    <a class="page-link" href="/" tabindex="-1" aria-disabled="true">&raquo;</a>
                   </li>
                 </ul>
               </nav>

@@ -95,11 +95,15 @@ app.controller("playCtrl",
         $scope.seekbar = document.querySelector('.seekbar')
         $scope.currentTime = document.querySelector('.current-time')
         $scope.duration = document.querySelector('.duration')
+        $scope.seek = 0;
 
         svSongs.getSong(name).then((response) => {
             $scope.des = response.data.data;
             $scope.music = new Audio($scope.des.location);
-            $scope.autoplay();
+            $scope.playAudio();
+            playmusic($scope.music,$scope.seekbar,$scope.duration);
+            onupdate($scope.music, $scope.seekbar);
+            timeupdate($scope.music,$scope.currentTime);
         })
 
         $scope.autoplay = () => {
@@ -107,7 +111,6 @@ app.controller("playCtrl",
             $scope.music.play();
             $scope.playBtn.className = 'pause'
             $scope.playBtn.innerHTML = '<i class="material-icons">pause</i>'
-            console.log("autoplay")
         }
 
         $scope.playAudio = function() {
@@ -124,13 +127,63 @@ app.controller("playCtrl",
                 $scope.playBtn.innerHTML = '<i class="material-icons">play_arrow</i>'
             }
             $scope.music.addEventListener('ended', function () {
+                console.log("end")
                 $scope.playBtn.className = 'play'
                 $scope.playBtn.innerHTML = '<i class="material-icons">play_arrow</i>'
                 $scope.music.currentTime = 0
             });
         };
 
-        // function handlePlay() {
-            
-        // }
+        $scope.handleSeekBar = function () { 
+            $scope.music.currentTime = $scope.seek
+        }
+        
+
+        $scope.download = () => {
+            saveAs($scope.des.location,$scope.des.title);
+        }
     }])
+
+    let playmusic = (music,seekbar,duration) => {
+        music.onloadeddata = function () {
+            seekbar.max = music.duration
+            var ds = parseInt(music.duration % 60)
+            var dm = parseInt((music.duration / 60) % 60)
+            duration.innerHTML = dm + ':' + ds
+        }
+    }
+
+    let onupdate = (music, seekbar) => {
+        music.ontimeupdate = function () { 
+            seekbar.value = music.currentTime 
+        }
+    }
+
+    let timeupdate = (music, currentTime) => {
+        music.addEventListener('timeupdate', function () {
+            var cs = parseInt(music.currentTime % 60)
+            var cm = parseInt((music.currentTime / 60) % 60)
+            currentTime.innerHTML = cm + ':' + cs
+            // console.log(music.currentTime)
+        }, false)
+    }
+
+    function saveContent(fileContents, fileName)
+{
+    var link = document.createElement('a');
+    link.download = fileName;
+    link.href = 'data:,' + fileContents;
+    link.click();
+}
+
+    let downloadLink = (element) => {
+        var file = element.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var data = file.type + ";charset=utf-8," + encodeURIComponent(e.target.result);
+            var link = document.getElementById("blah");
+            link.href = "data:" + data;
+            link.download = "someName." + file.name.split(".").pop();
+        };
+        reader.readAsDataURL(file);
+    }

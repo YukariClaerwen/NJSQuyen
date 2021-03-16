@@ -1,6 +1,11 @@
-const express = require("express")
-const app = express();
-let port = 7000;
+let express = require("express")
+let app = express();
+let port = process.env.PORT || 7000;
+let passport = require('passport');
+let flash = require('connect-flash');
+
+let cookieParser = require('cookie-parser');
+let session = require('express-session');
 
 var morgan = require("morgan");
 app.use(morgan("dev"));
@@ -11,22 +16,15 @@ app.use("/assets", express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.use(cookieParser());
+app.use(session({secret: 'ilovescodetheworld'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
-app.get('/', (req, res) => { res.render("index")})
-// app.get('/news', (req, res) => { res.render("news")})
-// app.get('/vip', (req, res) => { res.render("vip")})
-app.get('/danh-sach-bai-hat/:p', (req, res) => { res.render("index")})
-app.get('/tim-kiem/:k/:p', (req, res) => {res.render("index")})
-app.get('/bai-hat/:n', (req, res) => {res.render("index")})
+require('./routes.js')(app, passport);
 
-let apiSongs = require("./api/songs");
-apiSongs(app);
 
-let apiSearch = require("./api/search");
-apiSearch(app);
-
-let apiSong = require("./api/song");
-apiSong(app);
 
 const server = app.listen(port, () => {
     console.log(`Run success in port ${port}`)
