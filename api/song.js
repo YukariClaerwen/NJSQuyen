@@ -85,6 +85,7 @@ module.exports = (app) => {
             let data = {};
             if(!error && response.statusCode == 200) {
                 let key = await $('#icon-play').attr('keyencrypt');
+                console.log(key)
 
                 request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
                     if(!error && response.statusCode == 200) {
