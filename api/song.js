@@ -19,15 +19,17 @@ module.exports = (app) => {
                     let paths = $(el).find('.title_song > a').attr("href").split("/");
                     const refkeyyoutube = $(el).find('.title_song > a').attr("refkeyyoutube");
                     const keyencrypt = $(el).find('span.ic_play_circle').attr('keyencrypt');
-                    const song_url = paths[paths.length - 1];
+                    const songKey = $(el).find('.title_song > a').attr('key');
+                    let song_url = paths[paths.length - 1];
                     paths = song_url.split(".");
+                    song_url = paths[0];
                     const singer = $(el).find('.singer_song > a').text();
                     const singer_url = $(el).find('.singer_song > a').attr("href");
                     const img_url = $(el).find('.item_thumb img').attr('data-src');
                     const img_default = $(el).find('.item_thumb img').attr('src');
                     if(song != ""){
                         data.items.push({
-                            song, refkeyyoutube, keyencrypt, song_url, singer, singer_url, img_url, img_default
+                            song, refkeyyoutube, keyencrypt, songKey, song_url, singer, singer_url, img_url, img_default
                         });
                     }
                 });
@@ -57,6 +59,7 @@ module.exports = (app) => {
                     const song = $(el).find('.title_song > a').text();
                     const refkeyyoutube = $(el).find('.title_song > a').attr("refkeyyoutube");
                     const keyencrypt = $(el).find('span.ic_play_circle').attr('keyencrypt');
+                    const songKey = $(el).find('.title_song > a').attr('key');
                     let paths = $(el).find('.title_song > a').attr("href").split("/");
                     const song_url = paths[paths.length - 1];
                     paths = song_url.split(".");
@@ -66,7 +69,7 @@ module.exports = (app) => {
                     const img_default = $(el).find ('.item_thumb img').attr('src');
                     if(song != ""){
                         data.items.push({
-                            song, refkeyyoutube, keyencrypt, song_url, singer, singer_url, img_url, img_default
+                            song, refkeyyoutube, keyencrypt, songKey, song_url, singer, singer_url, img_url, img_default
                         })
                     }
                 });
@@ -79,7 +82,7 @@ module.exports = (app) => {
         })
     });
 
-    app.get("/song/:n/:k", async (req, res) => {
+    app.get("/song/:k", async (req, res) => {
         let key = await req.params.k; 
 
         request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{

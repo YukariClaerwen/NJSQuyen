@@ -1,0 +1,31 @@
+<section class="header">
+    <div class="header_main">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid px-md-5">
+              <a class="navbar-brand logo" href="/">
+                  <img src="/assets/images/logo_zingmp3.png" alt="">
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">VIP</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Gói Data</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">VIP Family</a>
+                  </li>
+                </ul>
+                <a class="btn btn-light" href="javascript:;" data-bs-toggle="modal" data-bs-target="#loginModal" ng-show="!$root.isLoggedIn">Đăng nhập</a>
+                <span class="text-white" ng-show="$root.isLoggedIn">Admin</span>
+                <a class="btn btn-light" ng-click="logout()" ng-show="$root.isLoggedIn">Đăng xuất</a>
+              </div>
+            </div>
+        </nav>
+    </div>
+    <div class="header_sub"></div>
+</section>

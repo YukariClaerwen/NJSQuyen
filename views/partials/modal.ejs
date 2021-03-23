@@ -1,0 +1,44 @@
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Đăng nhập</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form name="loginform" ng-submit="login()">
+            <div class="form-floating mb-3">
+              <input type="email" name="email" ng-model="email" class="form-control" id="floatingInput" placeholder="email@mail.com" required>
+              <label for="floatingInput">Email</label>
+            </div>
+            
+            <div class="alert alert-danger" ng-show="loginform.email.$dirty && loginform.email.$invalid">
+              <span ng-show="loginform.email.$error.required">Bạn phải nhập email.</span>
+              <span ng-show="loginform.email.$error.email">Hãy nhập đúng email.</span>
+            </div>
+            <div class="form-floating">
+              <input type="password" name="pass" ng-model="pass" class="form-control" id="floatingPassword" placeholder="Mật mã"ng-minlength="6" ng-maxlength="15" required>
+              <label for="floatingPassword">Mật mã</label>
+            </div>
+            
+            <div class="alert alert-danger" ng-show="loginform.pass.$dirty && loginform.pass.$invalid">
+              <span ng-show="loginform.pass.$error.required">Bạn phải nhập mật khẩu.</span>
+              <span ng-if="!loginform.pass.$valid">
+                  <span ng-show="loginform.pass.$error.minlength">Mật khẩu quá ngắn.</span>
+                  <span ng-show="loginform.pass.$error.maxlength">Mật khẩu quá dài.</span>
+              </span>
+            </div>  
+            <span class="badge" ng-bind-html="loginMessage"></span>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="login()" ng-disabled="loginform.$invalid" ng-show="!isLoggedIn">
+            
+            <!-- <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-hide="!loading"></span> -->
+            Đăng nhập
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

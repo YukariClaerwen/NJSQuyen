@@ -1,115 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zing MP3 VIP - Trải nghiệm không gian âm nhạc đẳng cấp của Zing Mp3</title>
-  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <%- include('partials/head'); -%>
 </head>
 <body ng-app="app.music" ng-controller="mainCtrl">
   <div id="wrapper">
     <div class="wrapper_page">
-      <section class="header">
-          <div class="header_main">
-              <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                  <div class="container-fluid px-md-5">
-                    <a class="navbar-brand logo" href="/">
-                        <img src="/assets/images/logo_zingmp3.png" alt="">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarText">
-                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                          <a class="nav-link active" aria-current="page" href="#">VIP</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">Gói Data</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">VIP Family</a>
-                        </li>
-                      </ul>
-                      <a class="btn btn-light" href="javascript:;" data-bs-toggle="modal" data-bs-target="#loginModal" ng-show="!$root.isLoggedIn">Đăng nhập</a>
-                      <span class="text-white" ng-show="$root.isLoggedIn">Admin</span>
-                      <a class="btn btn-light" ng-click="logout()" ng-show="$root.isLoggedIn">Đăng xuất</a>
-                    </div>
-                  </div>
-              </nav>
-          </div>
-          <div class="header_sub"></div>
-      </section>
+      <%- include('partials/header'); -%>
 
       <section ng-view>
       </section>
-
-      <footer class="footer">
-
-      </footer>
+      
+      <%- include('partials/footer'); -%>
     </div>
   </div>
-
-  <!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Đăng nhập</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form name="loginform" ng-submit="login()">
-          <div class="form-floating mb-3">
-            <input type="email" name="email" ng-model="email" class="form-control" id="floatingInput" placeholder="email@mail.com" required>
-            <label for="floatingInput">Email</label>
-          </div>
-          
-          <div class="alert alert-danger" ng-show="loginform.email.$dirty && loginform.email.$invalid">
-            <span ng-show="loginform.email.$error.required">Bạn phải nhập email.</span>
-            <span ng-show="loginform.email.$error.email">Hãy nhập đúng email.</span>
-          </div>
-          <div class="form-floating">
-            <input type="password" name="pass" ng-model="pass" class="form-control" id="floatingPassword" placeholder="Mật mã"ng-minlength="6" ng-maxlength="15" required>
-            <label for="floatingPassword">Mật mã</label>
-          </div>
-          
-          <div class="alert alert-danger" ng-show="loginform.pass.$dirty && loginform.pass.$invalid">
-            <span ng-show="loginform.pass.$error.required">Bạn phải nhập mật khẩu.</span>
-            <span ng-if="!loginform.pass.$valid">
-                <span ng-show="loginform.pass.$error.minlength">Mật khẩu quá ngắn.</span>
-                <span ng-show="loginform.pass.$error.maxlength">Mật khẩu quá dài.</span>
-            </span>
-          </div>  
-          <span class="badge" ng-bind-html="loginMessage"></span>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="login()" ng-disabled="loginform.$invalid" ng-show="!isLoggedIn">
-          
-          <!-- <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-hide="!loading"></span> -->
-          Đăng nhập
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
   
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
-
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.js"></script>
-
-  <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/song.js"></script>
-  <script src="/assets/js/play.js"></script>
-  <script src="/assets/js/services/svSongs.js"></script>
+  <%- include('partials/modal'); -%>
+  <%- include('partials/scripts'); -%>
 
 
 </body>

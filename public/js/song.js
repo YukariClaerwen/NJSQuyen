@@ -6,7 +6,7 @@ app.controller("songCtrl",
         $scope.songList = [];
         $scope.pages = 0;
         $scope.current = 1;
-        $scope.lo = "danh-sach-bai-hat"
+        $scope.lo = "bai-hat-moi"
         $scope.pageList = [];
         $scope.page = 1;
 
@@ -56,6 +56,7 @@ app.controller("songCtrl",
 app.controller("mainCtrl", ['$scope', 'svSongs', '$rootScope', '$location',
     function($scope, svSongs, $rootScope, $location){
         $scope.loading = false;
+        $scope.loginModal = new bootstrap.Modal(document.getElementById('loginModal'))
         if (localStorage.getItem("dssn") !== null) {
             $rootScope.demoSS = JSON.parse(window.localStorage.getItem("dssn"))[0];
         
@@ -92,6 +93,7 @@ app.controller("mainCtrl", ['$scope', 'svSongs', '$rootScope', '$location',
                         }];
                         let setjson = JSON.stringify(demoSS);
                         window.localStorage.setItem("dssn", setjson);
+                        $scope.loginModal.hide()
 
                         // $location.path("/");
                         // console.log($rootScope.isLoggedIn);
