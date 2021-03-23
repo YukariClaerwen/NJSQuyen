@@ -5,7 +5,7 @@
 // let currentTime = document.querySelector('.current-time')
 // let duration = document.querySelector('.duration')
 
-// // player
+// // player done
 
 // function handlePlay() {
 //     if (music.paused) {
@@ -24,6 +24,7 @@
 //     });
 // }
 
+// done
 // music.onloadeddata = function () {
 //     seekbar.max = music.duration
 //     var ds = parseInt(music.duration % 60)
@@ -39,14 +40,14 @@
 // }, false)
 
 
-// // like
+// // like done
 // var favIcon = document.querySelector('.favorite')
 // function handleFavorite() {
 //     favIcon.classList.toggle('active');
 // }
 
 
-// // repeat
+// // repeat done
 // var repIcon = document.querySelector('.repeat')
 // function handleRepeat() {
 //     if (music.loop == true) {
@@ -111,15 +112,7 @@ app.controller("playCtrl",
             $scope.link = "https://www.youtube.com/embed/" + $scope.params.yb;
             var html = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/"+ $scope.params.yb + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
             let el = document.getElementById("videoframe")
-            // angular.element(el)
             angular.element(el).append(html);
-            // setTimeout(function(){
-            //     document.getElementById("videoframe").appendChild(html)
-            //     // $("#videoframe").append(html);
-            // }, 500);
-            // $('html, body').css({
-            //     overflow: 'hidden'
-            // });
         }
 
         $scope.autoplay = () => {
@@ -150,8 +143,53 @@ app.controller("playCtrl",
             });
         };
 
-        $scope.handleSeekBar = function () { 
+        $scope.handleSeekBar = () => { 
             $scope.music.currentTime = $scope.seek
+        }
+
+        // like
+        $scope.favIcon = document.querySelector('.favorite');
+        $scope.handleFavorite = () => {
+            $scope.favIcon.classList.toggle('active');
+        }
+
+        // repeat
+    
+        $scope.repIcon = document.querySelector('.repeat')
+        $scope.handleRepeat = () => {
+            if ($scope.music.loop == true) {
+                $scope.music.loop = false
+                $scope.repIcon.classList.toggle('active')
+            }
+            else {
+                $scope.music.loop = true
+                $scope.repIcon.classList.toggle('active')
+            }
+        }
+
+        // volume
+        $scope.volIcon = document.querySelector('.volume')
+        $scope.volBox = document.querySelector('.volume-box')
+        $scope.volumeRange = document.querySelector('.volume-range')
+        $scope.volumeDown = document.querySelector('.volume-down')
+        $scope.volumeUp = document.querySelector('.volume-up')
+
+        $scope.handleVolume = () => {
+            $scope.volIcon.classList.toggle('active')
+            $scope.volBox.classList.toggle('active')
+        }
+        $scope.handleVolumeBar = () => { 
+            $scope.volumeRange.value = $scope.volume
+            $scope.music.volume = $scope.volumeRange.value / 100
+        }
+
+        $scope.handleVolumeDown = () => {
+            $scope.volumeRange.value = Number($scope.volumeRange.value) - 20
+            $scope.music.volume = $scope.volumeRange.value / 100
+        }
+        $scope.handleVolumeUp = () => {
+            $scope.volumeRange.value = Number($scope.volumeRange.value) + 20
+            $scope.music.volume = $scope.volumeRange.value / 100
         }
         
 
@@ -162,7 +200,8 @@ app.controller("playCtrl",
                 link.href = `${$scope.des.location}&download=true`;
                 link.click();
             } else {
-                alert("vui lòng đăng nhập để tải bài hát")
+                alert("Vui lòng đăng nhập để tải bài hát");
+                $scope.loginModal.show()
             }
         }
         $rootScope.$on("$routeChangeStart", () => {
@@ -192,24 +231,4 @@ app.controller("playCtrl",
             currentTime.innerHTML = cm + ':' + cs
             // console.log(music.currentTime)
         }, false)
-    }
-
-    function saveContent(fileContents, fileName)
-{
-    var link = document.createElement('a');
-    link.download = fileName;
-    link.href = 'data:,' + fileContents;
-    link.click();
-}
-
-    let downloadLink = (element) => {
-        var file = element.files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var data = file.type + ";charset=utf-8," + encodeURIComponent(e.target.result);
-            var link = document.getElementById("blah");
-            link.href = "data:" + data;
-            link.download = "someName." + file.name.split(".").pop();
-        };
-        reader.readAsDataURL(file);
     }

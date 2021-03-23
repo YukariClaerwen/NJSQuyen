@@ -11,10 +11,13 @@
             <div class="singer">{{des.singerTitle}}</div>
         </div>
         <div class="volume-box">
-            <span class="volume-down"><i class="material-icons">remove</i></span>
+            <span class="volume-down" ng-click="handleVolumeDown()"><i class="material-icons">remove</i></span>
+            <!-- <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
+                oninput="music.volume = this.value/100"> -->
             <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
-                oninput="music.volume = this.value/100">
-            <span class="volume-up"><i class="material-icons">add</i></span>
+                ng-change="handleVolumeBar()" ng-model="volume">
+            <span class="volume-up" ng-click="handleVolumeUp()"><i class="material-icons">add</i></span>
+            <!-- <i class="material-icons volume_off" ng-click="handleVolumeOff()">volume_off</i> -->
         </div>
         <div class="btn-box">
             <i class="material-icons repeat" ng-click="handleRepeat()">repeat</i>
