@@ -88,19 +88,20 @@ module.exports = (app) => {
         // let key = await req.params.k; 
         let key = await req.body.key;
         // console.log(req.session.user_id)
-        request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
+        let re = request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
             if(!error && response.statusCode == 200) {
                 data = await JSON.parse(body);
                 // let mp3 = await data.data.location;
                 // let title = await data.data.title;
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/ms.mp3`));
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/${title}.mp3`));
-                res.json(await data);
+                return res.json(await data);
             }
             else {
                 console.log(error);
             }
         });
+        re()
         // if(req.session.user_id) {
             
         // } else {
