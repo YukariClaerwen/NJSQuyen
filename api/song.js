@@ -94,7 +94,7 @@ module.exports = (app) => {
                 // let title = await data.data.title;
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/ms.mp3`));
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/${title}.mp3`));
-                res.json(data);
+                res.json(await data);
             }
             else {
                 console.log(error);
