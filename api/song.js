@@ -84,8 +84,9 @@ module.exports = (app) => {
         })
     });
 
-    app.post("/song/:k", async (req, res) => {
-        let key = await req.params.k; 
+    app.post("/song", async (req, res) => {
+        // let key = await req.params.k; 
+        let key = req.body.key;
         // console.log(req.session.user_id)
         request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}`, async (error, response, body) =>{
             if(!error && response.statusCode == 200) {

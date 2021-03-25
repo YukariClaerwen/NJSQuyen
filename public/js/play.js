@@ -100,7 +100,10 @@ app.controller("playCtrl",
         $scope.seek = 0;
 
         if($scope.params.key != '') {
-            svSongs.getSong($scope.params.key).then((response) => {
+            let data = {
+                key: $scope.params.key
+            }
+            svSongs.getSong(data).then((response) => {
                 $scope.des = response.data.data;
                 $scope.music = new Audio($scope.des.location);
                 $scope.playAudio();
