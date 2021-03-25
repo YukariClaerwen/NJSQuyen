@@ -87,8 +87,9 @@ module.exports = (app) => {
     app.post("/song", async (req, res) => {
         // let key = await req.params.k; 
         let key = await req.body.key;
+        let link = `http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`;
         // console.log(req.session.user_id)
-        let re = request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
+        let re = await request(link, async (error, response, body) =>{
             if(!error && response.statusCode == 200) {
                 data = await JSON.parse(body);
                 // let mp3 = await data.data.location;
