@@ -99,7 +99,7 @@ module.exports = (app) => {
                     request(data.data.info, async(error, response, body) => {
                         let $ = cheerio.load(await body);
                         let link = $('audio').attr('src');
-                        console.log(link);
+                        console.log(data.data.info);
                         res.json(await data);
                     })
                 } else {
