@@ -86,7 +86,7 @@ module.exports = (app) => {
 
     app.post("/song", async (req, res) => {
         // let key = await req.params.k; 
-        let key = req.body.key;
+        let key = await req.body.key;
         // console.log(req.session.user_id)
         request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}`, async (error, response, body) =>{
             if(!error && response.statusCode == 200) {
@@ -95,7 +95,7 @@ module.exports = (app) => {
                 // let title = await data.data.title;
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/ms.mp3`));
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/${title}.mp3`));
-                console.log(data.data.location)
+                console.log(body)
                 res.json(await data);
             }
             else {
