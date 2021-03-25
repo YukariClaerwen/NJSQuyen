@@ -87,13 +87,14 @@ module.exports = (app) => {
     app.post("/song/:k", async (req, res) => {
         let key = await req.params.k; 
         // console.log(req.session.user_id)
-        request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}&key2=&key3=&ip=14.169.121.22`, async (error, response, body) =>{
+        request(`http://m.nhaccuatui.com/ajax/get-media-info?key1=${key}`, async (error, response, body) =>{
             if(!error && response.statusCode == 200) {
                 data = await JSON.parse(body);
                 // let mp3 = await data.data.location;
                 // let title = await data.data.title;
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/ms.mp3`));
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/${title}.mp3`));
+                console.log(data.data.location)
                 res.json(await data);
             }
             else {
