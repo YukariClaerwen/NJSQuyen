@@ -95,8 +95,16 @@ module.exports = (app) => {
                 // let title = await data.data.title;
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/ms.mp3`));
                 // dl(await mp3).pipe(fs.createWriteStream(`public/files/${title}.mp3`));
-                console.log(body)
-                res.json(await data);
+                if(data.data.location == '') {
+                    request(data.data.info, async(error, response, body) => {
+                        let $ = cheerio.load(await body);
+                        let link = $('audio').attr('src');
+                        console.log(link);
+                        res.json(await data);
+                    })
+                } else {
+                    res.json(await data);
+                }
             }
             else {
                 console.log(error);
