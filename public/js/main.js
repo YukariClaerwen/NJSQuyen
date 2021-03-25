@@ -16,6 +16,11 @@ app.config(['$routeProvider','$locationProvider', ($routeProvider, $locationProv
         templateUrl: "/assets/views/play.html",
         controller: 'playCtrl'
     })
+    .when('/song/:k', {
+        templateUrl: "/assets/views/play.html",
+        controller: 'mainCtrl',
+        resolve: checklogin
+    })
     .when('/tim-kiem/:key/:page', {
         templateUrl: "/assets/views/home.html",
         controller: 'songCtrl'
@@ -36,6 +41,7 @@ let checklogin = ($q, $location,$rootScope,$route) => {
     let deferred = $q.defer();
     // $rootScope.isLoggedIn = false;
     if($rootScope.isLoggedIn){
+        console.log($rootScope.isLoggedIn)
         deferred.resolve();
         // var route = $route.current.params.user;
         // if(route === $rootScope.userName){           
@@ -47,8 +53,9 @@ let checklogin = ($q, $location,$rootScope,$route) => {
         // }
     }
     else {
+        console.log($rootScope.isLoggedIn)
         deferred.reject();
-        // $location.url("/login");
+        $location.url("/");
     }
     return deferred.promise;
 }

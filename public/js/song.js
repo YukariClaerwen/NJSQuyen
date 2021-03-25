@@ -57,6 +57,7 @@ app.controller("mainCtrl", ['$scope', 'svSongs', '$rootScope', '$location',
     function($scope, svSongs, $rootScope, $location){
         $scope.loading = false;
         $scope.loginModal = new bootstrap.Modal(document.getElementById('loginModal'))
+        $rootScope.isLoggedIn = false;
         if (localStorage.getItem("dssn") !== null) {
             $rootScope.demoSS = JSON.parse(window.localStorage.getItem("dssn"))[0];
         
@@ -70,6 +71,9 @@ app.controller("mainCtrl", ['$scope', 'svSongs', '$rootScope', '$location',
             var alert = confirm("Bạn muốn đăng xuất?")
             if(alert){
                 logout($rootScope, $location);
+                svSongs.logout().then((response) => {
+                    console.log(response.data);
+                })
             }
         };
         $scope.login = () => {

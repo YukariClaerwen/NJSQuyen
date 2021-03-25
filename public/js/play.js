@@ -178,6 +178,7 @@ app.controller("playCtrl",
             $scope.volIcon.classList.toggle('active')
             $scope.volBox.classList.toggle('active')
         }
+        $scope.volume = 50
         $scope.handleVolumeBar = () => { 
             $scope.volumeRange.value = $scope.volume
             $scope.music.volume = $scope.volumeRange.value / 100
@@ -192,12 +193,12 @@ app.controller("playCtrl",
             $scope.music.volume = $scope.volumeRange.value / 100
         }
         
-
         $scope.download = () => {
             if($rootScope.isLoggedIn) {
                 let link = document.createElement("a");
                 link.download = $scope.des.title;
                 link.href = `${$scope.des.location}&download=true`;
+                console.log(link.href)
                 link.click();
             } else {
                 alert("Vui lòng đăng nhập để tải bài hát");
