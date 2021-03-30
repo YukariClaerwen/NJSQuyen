@@ -4,6 +4,9 @@ const request = require("request-promise");
 const fs = require('fs');
 const dl = require("download");
 
+// const fs = require('fs');
+const ytdl = require('ytdl-core');
+
 module.exports = (app) => {
     app.get("/songlist/:p", (req, res) => {
         let page = req.params.p || 1; 
@@ -159,12 +162,28 @@ module.exports = (app) => {
 
         
     })
+    // app.get("/yt/video/", async (req, res) => {
+    //     let key = await req.params.k;
+    //     let info = await ytdl.getInfo("1zxNH09Nzdc");
+    //     let format = ytdl.chooseFormat(info.formats, {quality: 'highestvideo'});
+    //     console.log(format);
+    //     // ytdl('http://www.youtube.com/watch?v=aqz-KE-bpKQ').pipe(fs.createWriteStream('video.mp4'));
+    // });
+
+    app.get("/yt/video/:k.mp4", async (req, res) => {
+        let key = await req.params.k;
+        let info = await ytdl.getInfo(key);
+        let format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' });
+        // console.log(format);
+        res.writeHead(301, {"location": format.url});
+        return res.end();
+    });
     
     app.get("/yt/thumbnail/hq/:k.jpg", (req,res) => {
         let key = req.params.k;
         let link = `https://i.ytimg.com/vi/${key}/hqdefault.jpg`;
         res.writeHead(301, {"location": link});
-        console.log(res);
+        // console.log(res);
         return res.end();
     })
     app.get("/yt/thumbnail/max/:k.jpg", (req,res) => {
@@ -194,4 +213,6 @@ module.exports = (app) => {
 
         
     })
+
+
 }
