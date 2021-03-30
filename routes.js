@@ -7,6 +7,7 @@ module.exports = (app, passport) => {
     app.get('/tim-kiem/:k/:p', (req, res) => {res.render("index")})
     app.get('/bai-hat/:n', (req, res) => {res.render("index")})
 
+    app.get('/video/:k', (req, res) => {res.render("index")})
 
     //api
     let apiSong = require("./api/song");
